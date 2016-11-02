@@ -22,7 +22,7 @@ def show_authors(request):
     return render(request, 'bookstoreapp\\authors.html', context)
 
 
-def edit_author(request, author_id=None):
+def edit_author(request, author_id):
     if "cancel" in request.POST:
         return redirect('main_page')
     context = dict()
