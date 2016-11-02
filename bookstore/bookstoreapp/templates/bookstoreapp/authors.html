@@ -16,12 +16,13 @@
     {% for author in query %}
     <tr>
         <td>{{author.author_id}}</td>
-        <td>{{author.author_name}}</td>
+        <td><a href="{% url 'edit author' author.author_id %}">{{author.author_name}}</a></td>
     </tr>
     {% endfor %}
 </table>
 {% else %}
 <p>Список пуст</p>
 {% endif %}
+<a href="{% url 'main page' %}">На главную</a>
 </body>
 </html>

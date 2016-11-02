@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование "Автор"</title>
+</head>
+<body>
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% elif succsessful %}
+<p>Изменения успешно сохранены</p>
+{% elif author_id %}
+<form action="{% 'edit_author' %}" method="post">
+    <p>
+        Имя автора:
+    <div><input required type="author_name" name="author_name" value="{{author_name}}"></div>
+    </p>
+
+    <p display="inline"><input type="Сохранить" value="Save"><input type="Отмена" value="Cancel"></p>
+</form>
+{% elif not author_id %}
+<form action="{% url 'save author'%}" method="post">
+    <p>
+        Имя автора:
+    <div><input required type="author_name" name="author_name"></div>
+    </p>
+
+    <p display="inline"><input type="Сохранить" value="Save"><input type="Отмена" value="Cancel"></p>
+</form>
+{% else %}
+<p>Что-то пошло не так</p>
+{% endif %}
+<a href="{% url 'main page' %}">На главную</a>
+</body>
+</html>
