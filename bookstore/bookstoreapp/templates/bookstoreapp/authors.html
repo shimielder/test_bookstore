@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookstore</title>
+</head>
+<body>
+{% if query %}
+
+<table border="1">
+    <caption>Список авторов</caption>
+    <tr>
+        <th>ID</th>
+        <th>Имя автора</th>
+    </tr>
+    {% for author in query %}
+    <tr>
+        <td>{{author.author_id}}</td>
+        <td>{{author.author_name}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Список пуст</p>
+{% endif %}
+</body>
+</html>

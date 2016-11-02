@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookstore</title>
+</head>
+<body>
+{% if query %}
+
+<table border="1">
+    <caption>Список книг</caption>
+    <tr>
+        <th>ID</th>
+        <th>Название книги</th>
+        <th>Автор</th>
+        <th>Количество страниц</th>
+    </tr>
+    {% for book in query %}
+    <tr>
+        <td>{{book.book_id}}</td>
+        <td>{{book.book_title}}</td>
+        <td>{{book.author.author_name}}</td>
+        <td>{{book.pages_count}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Список пуст</p>
+{% endif %}
+</body>
+</html>
