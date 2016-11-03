@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^books/(?P<book_id>[0-9]+)/edit/$', edit_book, name='edit book'),
     url(r'^authors/(?P<author_id>[0-9]+)/edit/$', edit_author, name='edit author'),
     url(r'^search$', search, name='search'),
+    url(r'^authors/search$', search),
+    url(r'^books/search$', search),
 ]
