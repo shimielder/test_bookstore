@@ -19,8 +19,10 @@ from bookstoreapp.views import main, show_books, show_authors, edit_author, edit
 
 urlpatterns = [
     url(r'^$', main, name='main page'),
-    url(r'^books/', show_books, name='show books'),
-    url(r'^authors/', show_authors, name='show authors'),
-    url(r'^edit/book/?P<book_id>[0-9]+/', edit_book, name='edit book'),
-    url(r'^edit/author/(?P<author_id>[0-9]+)/', edit_author, name='edit author'),
+    url(r'^books/$', show_books, name='show books'),
+    url(r'^authors/$', show_authors, name='show authors'),
+    url(r'^authors/add/$', edit_author, name='add author'),
+    url(r'^books/add/$', edit_book, name='add book'),
+    url(r'^books/(?P<book_id>[0-9]+)/edit/$', edit_book, name='edit book'),
+    url(r'^authors/(?P<author_id>[0-9]+)/edit/$', edit_author, name='edit author'),
 ]

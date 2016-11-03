@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from bookstoreapp.models import Books, Authors
-from django.core.exceptions import ObjectDoesNotExist
+from bookstoreapp.forms import AuthorForm, BookForm
 
 
 # Create your views here.
@@ -10,46 +9,60 @@ def main(request):
                'show authors': show_authors}
     return render(request, 'bookstoreapp\\main.html', context)
 
+
 def show_books(request):
     context = dict()
-    context['query'] = Books.objects.all()
+    context['query'] = Books.objects.all().order_by('book_id')
     return render(request, 'bookstoreapp\\books.html', context)
 
 
 def show_authors(request):
     context = dict()
-    context['query'] = Authors.objects.all()
+    context['query'] = Authors.objects.all().order_by('author_id')
     return render(request, 'bookstoreapp\\authors.html', context)
 
 
-def edit_author(request, author_id):
-    if "cancel" in request.POST:
-        return redirect('main_page')
-    context = dict()
+def edit_author(request, author_id=None):
+    form = AuthorForm()
     try:
-        author = Authors.objects.get(author_id=author_id)
-    except ObjectDoesNotExist:
-        return render(request, 'bookstoreapp\\edit_author.html', context)
-    context['author id'] = author_id
-    context['author name'] = author.author_name
-    return render(request, 'bookstoreapp\\edit_author.html', context)
+        existing_author = Authors.objects.get(author_id=author_id)
+    except Authors.DoesNotExist:
+        existing_author = None
+    if request.method == 'POST':
+        if existing_author:
+            form = AuthorForm(request.POST, instance=existing_author)
+            if "Delete" in request.POST:
+                existing_author.delete()
+                return redirect(show_authors)
+        else:
+            form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'bookstoreapp\\edit_author.html', {'saved': True,
+                                                                      'form': form})
+    if existing_author:
+        form = AuthorForm(instance=existing_author)
+    return render(request, 'bookstoreapp\\edit_author.html', {'form': form})
 
 
-def save_author(request):
-    context = {}
+def edit_book(request, book_id=None):
+    form = BookForm()
     try:
-        author = Authors(author_name=request.POST['author_name'])
-        author.save()
-    except Exception as e:
-        context['error_message'] = e
-    else:
-        context['succsessful'] = True
-    return render(request, 'bookstoreapp\\edit_author.html', context)
-
-
-def edit_book(request, book_id):
-    if "cancel" in request.POST:
-        return redirect('main_page')
-    context = dict()
-    book = Books.objects.filter(book_id=book_id)
-    pass
+        existing_book = Books.objects.get(book_id=book_id)
+    except Books.DoesNotExist:
+        existing_book = None
+    if request.method == 'POST':
+        if existing_book:
+            form = BookForm(request.POST, instance=existing_book)
+            if "Delete" in request.POST:
+                existing_book.delete()
+                return redirect(show_books)
+        else:
+            form = BookForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'bookstoreapp\\edit_book.html', {'saved': True,
+                                                                    'form': form})
+    if existing_book:
+        form = BookForm(instance=existing_book)
+    return render(request, 'bookstoreapp\\edit_book.html', {'form': form})

@@ -16,7 +16,7 @@ class Authors(models.Model):
 class Books(models.Model):
     book_id = models.AutoField(primary_key=True)
     book_title = models.CharField(unique=True, max_length=200)
-    author = models.ForeignKey(Authors, models.DO_NOTHING)
+    author = models.ForeignKey(Authors, models.PROTECT)
     pages_count = models.SmallIntegerField()
 
     def __str__(self):
