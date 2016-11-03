@@ -23,12 +23,16 @@ def show_authors(request):
 
 
 def search(request):
-    print(request.POST)
     context = dict()
     if 'Search' in request.POST:
-        context['books_query'] = Books.objects.all().filter(book_name=request.POST['Search']).order_by('book_id')
-        context['authors_query'] = Authors.objects.all().filter(author_name=request.POST['Search']).order_by(
+        search_data = Books.objects.all().filter(book_title__search=request.POST['Search']).order_by('book_id')
+        if search_data:
+            context['books_query'] = search_data
+        search_data = Authors.objects.all().filter(author_name__search=request.POST['Search']).order_by(
             'author_id')
+        if search_data:
+            print(search_data)
+            context['authors_query'] = search_data
     return render(request, 'bookstoreapp\\search.html', context)
 
 
