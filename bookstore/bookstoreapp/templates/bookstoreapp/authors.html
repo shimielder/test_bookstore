@@ -5,8 +5,15 @@
     <title>Bookstore</title>
 </head>
 <body>
-{% if query %}
 
+<form method="post" action="search">
+    {% csrf_token %}
+    <input name="Search">
+    <button type="submit">Поиск</button>
+
+</form>
+
+{% if query %}
 <table border="1">
     <caption>Список авторов</caption>
     <tr>
@@ -25,5 +32,6 @@
 {% endif %}
 <a href="{% url 'add author' %}">Добавить автора</a>
 <a href="{% url 'main page' %}">На главную</a>
+
 </body>
 </html>

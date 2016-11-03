@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from bookstoreapp.views import main, show_books, show_authors, edit_author, edit_book
+from bookstoreapp.views import main, show_books, show_authors, edit_author, edit_book, search
 
 
 urlpatterns = [
@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^books/add/$', edit_book, name='add book'),
     url(r'^books/(?P<book_id>[0-9]+)/edit/$', edit_book, name='edit book'),
     url(r'^authors/(?P<author_id>[0-9]+)/edit/$', edit_author, name='edit author'),
+    url(r'^search$', search, name='search'),
 ]

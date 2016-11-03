@@ -5,9 +5,18 @@
     <title>Главная страница</title>
 </head>
 <body>
+
+<form method="post" action='search'>
+    {% csrf_token %}
+    <input name="Search">
+    <button type="submit">Поиск</button>
+
+</form>
+
 <ul>
     <li><a href="{% url 'show authors' %}">Авторы</a></li>
     <li><a href="{% url 'show books' %}">Книги</a></li>
 </ul>
+
 </body>
 </html>

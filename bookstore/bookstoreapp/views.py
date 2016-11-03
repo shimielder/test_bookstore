@@ -22,6 +22,16 @@ def show_authors(request):
     return render(request, 'bookstoreapp\\authors.html', context)
 
 
+def search(request):
+    print(request.POST)
+    context = dict()
+    if 'Search' in request.POST:
+        context['books_query'] = Books.objects.all().filter(book_name=request.POST['Search']).order_by('book_id')
+        context['authors_query'] = Authors.objects.all().filter(author_name=request.POST['Search']).order_by(
+            'author_id')
+    return render(request, 'bookstoreapp\\search.html', context)
+
+
 def edit_author(request, author_id=None):
     form = AuthorForm()
     try:

@@ -14,7 +14,6 @@
 {% if form %}
 <form method="post">
     {% csrf_token %}
-    <p>
         {% for field in form.visible_fields %}
         {{ field.errors }}
         {{ field }}
